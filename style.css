@@ -4,6 +4,10 @@
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 .img-fundo {
     min-height: 100vh;
     display: flex;
@@ -12,9 +16,11 @@
     position: relative;
 }
 
+
 .img-fundo::before {
    content:'';
-   background-image: url(./img/matrix-world.jpg);
+   /* background-image: url(./img/matrix-world.jpg); */
+   background-image: url(./img/bdc_logo_test1.png);
    background-repeat: no-repeat; 
    background-size: cover;
    background-position: center;
@@ -23,43 +29,6 @@
    left: 0;
    bottom: 0;
    right: 0;
-   opacity: 0.77;
+   opacity: 0.9;
 }
 
-h1 {
-    font-size: 100px;
-    font-family: 'Times New Roman', Times, serif;
-    text-align: center;
-    position: relative;
-    color: rgb(255, 255, 255);
-    text-shadow: 10px 0px black ;
-}
-
-.img-fundo, .beco::before {
-    background-image: linear-gradient(90deg, red,blue);
-    /* background-clip: text;
-    color: transparent; */
-}
-.beco {
-    margin-left: 50px;
-    margin-right: 50px;
-    padding: 50px;
-    font-size: 65px;
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-    text-align: center;
-    position: relative;
-}   
-
-.texto {
-    margin-left: 50px;
-    margin-right: 50px;
-    padding: 20px;
-    font-size: 40px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    text-align: center;
-    position: relative;
-    
-    color: rgb(215, 238, 13);
-    text-shadow: 5px 0px rgb(9, 27, 2);
-
-}
