@@ -1,0 +1,120 @@
+/* Estilos da seção principal */
+.hero-section {
+    padding: 50px 20px;
+    text-align: center;
+    background-color: #f0f0f0;
+}
+
+.hero-section h1 {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.hero-section p {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.cta-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.cta-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Estilos da seção criadora */
+.creator {
+    padding: 50px 20px;
+    text-align: center;
+    background-color: #f9f9f9;
+}
+
+.creator-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.creator img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+    object-fit: cover;
+}
+
+.creator-info h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.creator-info p {
+    font-size: 18px;
+    text-align: justify;
+}
+
+/* Estilos da seção de recursos */
+.features {
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.features h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.features ul {
+    list-style: none;
+    padding: 0;
+}
+
+.features li {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+/* Estilos da seção de depoimentos */
+.testimonial {
+    padding: 50px 20px;
+    text-align: center;
+    background-color: #f0f0f0;
+}
+
+.testimonial h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.testimonial p {
+    font-size: 18px;
+    font-style: italic;
+}
+
+
+
+
+/* Responsividade */
+@media (min-width: 768px) {
+    .creator-container {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+
+    .creator img {
+        margin-right: 20px;
+    }
+
+    .creator-info {
+        text-align: left;
+    }
+}
+
