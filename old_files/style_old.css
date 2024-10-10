@@ -1,0 +1,49 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+html, body {
+    scroll-behavior: smooth;
+}
+
+.img-fundo {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+
+.img-fundo::before {
+   content:'';
+   /* background-image: url(./img/matrix-world.jpg); */
+   background-image: url(./img/bdc_logo_test1.png);
+   background-repeat: no-repeat; 
+   background-size: cover;
+   background-position: center;
+   position: absolute;
+   top: 0;
+   left: 0;
+   bottom: 0;
+   right: 0;
+   opacity: 0.9;
+}
+
+
+/* ------Botão de voltar------ */
+
+#back-to-top {
+    width: 85px;
+
+    position: fixed;
+    bottom: 10px;
+    right: 50px;
+    background: black;
+    border-radius: 10px;
+
+    color: white;
+    font-size: 1rem;
+  }
