@@ -1,2 +1,26 @@
+# Environment & Dependencies
 .env
 .venv
+node_modules/
+package-lock.json
+yarn.lock
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
+.DS_Store
+
+# Build outputs
+dist/
+build/
+*.log
+
+# Temp files
+*.tmp
+*.temp
+
+# OS
+Thumbs.db
