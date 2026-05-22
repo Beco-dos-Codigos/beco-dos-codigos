@@ -1,56 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Beco dos Códigos</title>
     <link rel="stylesheet" href="./css/index.css" />
   </head>
   <body>
-    <header class="main-header">
-      <div class="header-content">
-        <nav class="nav-bar">
-          <div class="menu-toggle"></div>
-          <a href="./index.html" class="logo">
-            <img
-            width="1"
-            class="img-logo"
-            alt="Logo do Beco dos Códigos"
-            src="./assets/img/logov1.png"
-            />
-          </a>
-          <div class="nav-links" id="nav-links"></div>
-        </nav>
-      </div>
-    </header>
+    <div data-component="header"></div>
 
-    <h1>Bem-vindo ao Beco dos Códigos 2026</h1>
-    <div class="central">
-      <div class="container-grupo1" id="container">
-        <div class="arte-central">
-          <img src="./assets/img/artv1.png" alt="Arte" />
-        </div>
-        <!-- Os elementos serão adicionados aqui dinamicamente -->
-      </div>
-    </div>
-    <div class="container-anima">
-      <div class="animated-section">
-        <div class="pillar-container">
-          <!-- Repetição dos pilares -->
-          <div class="pillar">BECO DOS CODIGOS</div>
-          <div class="pillar">BECO DOS CODIGOS</div>
-          <div class="pillar">BECO DOS CODIGOS</div>
-          <div class="pillar">BECO DOS CODIGOS</div>
-          <div class="pillar">BECO DOS CODIGOS</div>
-          <div class="pillar">BECO DOS CODIGOS</div>
-          <div class="pillar">BECO DOS CODIGOS</div>
-          <div class="pillar">BECO DOS CODIGOS</div>
-
+    <main class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow">Beco dos Códigos</div>
+        <h1>Transformando ideias em produtos digitais</h1>
+        <p>
+          Design e desenvolvimento estático moderno, com componentes reutilizáveis
+          e estrutura pensada para manutenção no GitHub Pages.
+        </p>
+        <div class="hero-actions">
+          <a class="button-primary" href="./pages/portfolio.html">Ver Portfólio</a>
+          <a class="button-secondary" href="./pages/servicos.html">Nossos Serviços</a>
         </div>
       </div>
 
-    </div>
-    <script src="./js/animations.js"></script>
-    <script src="./js/index.js"></script>
+      <div class="hero-visual">
+        <img src="./assets/img/artv1.png" alt="Arte principal" />
+      </div>
+    </main>
+
+    <section class="section-cards">
+      <div class="cards-grid">
+        <article class="card">
+          <h3>Projetos em destaque</h3>
+          <p>Cases e demonstrações técnicas com foco em resultados.</p>
+        </article>
+        <article class="card">
+          <h3>Trilhas e Cursos</h3>
+          <p>Conteúdos práticos e trilhas passo-a-passo — <a href="./pages/trilha_oop_python.html">veja a trilha OOP Python.</a></p>
+        </article>
+        <article class="card">
+          <h3>Consultoria</h3>
+          <p>Projetos, arquitetura e automação para times e empresas.</p>
+        </article>
+      </div>
+    </section>
+
+    <div data-component="footer"></div>
+
+    <script type="module" src="./js/site-data.js"></script>
+    <script type="module" src="./js/components.js"></script>
   </body>
 </html>

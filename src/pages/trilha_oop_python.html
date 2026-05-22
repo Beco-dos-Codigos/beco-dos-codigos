@@ -1,0 +1,1504 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Trilha OOP Python — Beco dos Códigos</title>
+  <link rel="stylesheet" href="../css/index.css" />
+  <style>
+  :root {
+    --bg: #050914;
+    --surface: #08112a;
+    --surface2: #101b39;
+    --surface3: #151b34;
+    --border: rgba(240, 87, 248, 0.15);
+    --border-light: rgba(240, 87, 248, 0.2);
+    --text: #e5f4ff;
+    --text-muted: #9bb8d4;
+    --text-dim: #6a7a9a;
+    --accent: #f057f8;
+    --accent2: #7f6bff;
+    --accent3: #a877ff;
+    --accent-red: #ff7a9a;
+    --accent-purple: #c87af0;
+    --code-bg: #0b0f23;
+    --tag-bg: rgba(240, 87, 248, 0.08);
+    --tag-border: rgba(240, 87, 248, 0.18);
+    --tag-text: #b6a3ff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: radial-gradient(circle at top left, rgba(240, 87, 248, 0.14), transparent 28%),
+      linear-gradient(180deg, #04070f 0%, #050914 36%, #020407 100%);
+    color: var(--text);
+    font-family: 'Inter', 'Arial', sans-serif;
+    font-size: 15px;
+    line-height: 1.75;
+    font-weight: 300;
+  }
+
+  .page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── LAYOUT ── */
+  .page { max-width: 860px; margin: 0 auto; padding: 0 2rem 6rem; }
+
+  /* ── HEADER ── */
+  .site-header {
+    border-bottom: 1px solid var(--border);
+    padding: 2.5rem 0 2rem;
+    margin-bottom: 4rem;
+  }
+  .header-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+  }
+  .site-header h1 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--text);
+    letter-spacing: -0.02em;
+  }
+  .site-header h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .site-header .subtitle {
+    margin-top: 1rem;
+    color: var(--text-muted);
+    font-size: 15px;
+    max-width: 560px;
+    line-height: 1.65;
+  }
+
+  /* ── TOC ── */
+  .toc {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1.75rem 2rem;
+    margin-bottom: 4rem;
+  }
+  .toc-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 1.2rem;
+  }
+  .toc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.5rem 2rem;
+  }
+  .toc-item {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    color: var(--text-muted);
+    font-size: 14px;
+    cursor: pointer;
+    transition: color 0.15s;
+    text-decoration: none;
+  }
+  .toc-item:hover { color: var(--accent); }
+  .toc-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    flex-shrink: 0;
+  }
+
+  /* ── INTRO SECTION ── */
+  .intro-section { margin-bottom: 5rem; }
+
+  /* ── SECTION HEADER ── */
+  .section-block { margin-bottom: 5rem; }
+  .part-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .part-num {
+    font-family: 'Fraunces', serif;
+    font-size: 3.5rem;
+    font-weight: 300;
+    line-height: 1;
+    color: var(--border-light);
+    flex-shrink: 0;
+    margin-top: -0.3rem;
+  }
+  .part-meta {}
+  .part-tag {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--tag-text);
+    background: var(--tag-bg);
+    border: 1px solid var(--tag-border);
+    border-radius: 2px;
+    padding: 2px 8px;
+    margin-bottom: 0.6rem;
+  }
+  .part-meta h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.6rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--text);
+    margin-bottom: 0.4rem;
+  }
+  .part-meta .part-desc {
+    color: var(--text-muted);
+    font-size: 14px;
+  }
+  .duration-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--accent2);
+    margin-top: 0.5rem;
+  }
+  .duration-badge::before {
+    content: '◷';
+    font-size: 12px;
+  }
+
+  /* ── EXERCISE CARD ── */
+  .exercise-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+  }
+  .ex-header {
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    cursor: pointer;
+    user-select: none;
+  }
+  .ex-header:hover { background: var(--surface2); }
+  .ex-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--text-dim);
+    flex-shrink: 0;
+    min-width: 2.2rem;
+  }
+  .ex-title {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text);
+    flex: 1;
+  }
+  .ex-concepts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .chip {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    background: var(--surface3);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 2px 7px;
+    border-radius: 2px;
+  }
+  .ex-toggle {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+    color: var(--text-dim);
+    flex-shrink: 0;
+    transition: transform 0.2s;
+  }
+  .ex-body {
+    padding: 1.5rem;
+    display: none;
+  }
+  .ex-body.open { display: block; }
+  .ex-toggle.open { transform: rotate(180deg); }
+
+  /* ── CONTENT ELEMENTS ── */
+  h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--accent);
+    margin: 1.5rem 0 0.6rem;
+    letter-spacing: 0.01em;
+  }
+  h3:first-child { margin-top: 0; }
+
+  p { margin-bottom: 0.9rem; color: var(--text-muted); font-size: 14px; }
+  p strong { color: var(--text); font-weight: 500; }
+
+  ul, ol {
+    margin: 0.5rem 0 1rem 1.2rem;
+    color: var(--text-muted);
+    font-size: 14px;
+  }
+  li { margin-bottom: 0.3rem; }
+
+  /* ── CODE BLOCKS ── */
+  .code-block {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    margin: 1rem 0;
+    overflow: hidden;
+  }
+  .code-label {
+    padding: 0.4rem 1rem;
+    border-bottom: 1px solid var(--border);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+  pre {
+    padding: 1.25rem 1.25rem;
+    overflow-x: auto;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    line-height: 1.65;
+    color: #c8c0b0;
+  }
+  .kw { color: #c87a7a; }
+  .fn { color: #7ab8c8; }
+  .cls { color: #c8b87a; }
+  .str { color: #a8c87a; }
+  .cm { color: #4a4840; font-style: italic; }
+  .nm { color: #b07ac8; }
+  .dt { color: #d4aa60; }
+  .dec { color: #c87ab0; }
+
+  /* ── CALLOUT BOXES ── */
+  .callout {
+    border-left: 2px solid var(--border-light);
+    padding: 0.9rem 1.2rem;
+    margin: 1rem 0;
+    background: var(--surface2);
+    border-radius: 0 3px 3px 0;
+    font-size: 13.5px;
+  }
+  .callout.tip { border-left-color: var(--accent); }
+  .callout.warn { border-left-color: var(--accent-red); }
+  .callout.info { border-left-color: var(--accent2); }
+  .callout.good { border-left-color: var(--accent3); }
+  .callout-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+  .callout.tip .callout-label { color: var(--accent); }
+  .callout.warn .callout-label { color: var(--accent-red); }
+  .callout.info .callout-label { color: var(--accent2); }
+  .callout.good .callout-label { color: var(--accent3); }
+  .callout p { font-size: 13.5px; margin-bottom: 0; color: var(--text-muted); }
+
+  /* ── ANALOGY BOX ── */
+  .analogy {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1.2rem 1.4rem;
+    margin: 1rem 0;
+  }
+  .analogy-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-purple);
+    margin-bottom: 0.5rem;
+  }
+  .analogy p { font-size: 13.5px; color: var(--text-muted); margin-bottom: 0; }
+
+  /* ── ANSWER SECTION ── */
+  .answer-block {
+    margin-top: 1.5rem;
+    border-top: 1px dashed var(--border);
+    padding-top: 1.5rem;
+  }
+  .answer-toggle {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    padding: 0.45rem 1rem;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.15s;
+    margin-bottom: 1rem;
+  }
+  .answer-toggle:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .answer-content { display: none; }
+  .answer-content.open { display: block; }
+
+  /* ── PROJECT FINAL ── */
+  .project-final {
+    background: var(--surface);
+    border: 1px solid var(--border-light);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 1.5rem;
+  }
+  .project-header {
+    background: var(--surface2);
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .project-header h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 0.4rem;
+  }
+  .project-body { padding: 1.75rem 2rem; }
+  .step-list { list-style: none; margin: 0; padding: 0; }
+  .step-list li {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: var(--text-muted);
+    font-size: 14px;
+  }
+  .step-list li:last-child { border-bottom: none; }
+  .step-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    min-width: 2rem;
+  }
+
+  /* ── NEXT STEPS ── */
+  .next-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+  .next-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1.2rem 1.4rem;
+  }
+  .next-card .nc-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 0.5rem;
+  }
+  .next-card p { font-size: 13.5px; color: var(--text-muted); margin-bottom: 0; }
+
+  /* ── INLINE CODE ── */
+  code {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12.5px;
+    color: var(--accent);
+    background: var(--tag-bg);
+    border: 1px solid var(--tag-border);
+    padding: 1px 5px;
+    border-radius: 2px;
+  }
+
+  /* ── HR ── */
+  hr { border: none; border-top: 1px solid var(--border); margin: 3rem 0; }
+
+  /* ── FOOTER ── */
+  footer {
+    margin-top: 5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.05em;
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 3px; }
+</style>
+</head>
+<body>
+  <div class="page">
+    <div data-component="header"></div>
+
+<!-- TOC -->
+<nav class="toc">
+  <p class="toc-label">Índice</p>
+  <div class="toc-grid">
+    <a href="#intro" class="toc-item"><span class="toc-num">00</span> Introdução & filosofia</a>
+    <a href="#parte1" class="toc-item"><span class="toc-num">01</span> Fundamentos — Classe e objeto</a>
+    <a href="#parte2" class="toc-item"><span class="toc-num">02</span> Estado e comportamento</a>
+    <a href="#parte3" class="toc-item"><span class="toc-num">03</span> Python moderno</a>
+    <a href="#parte4" class="toc-item"><span class="toc-num">04</span> Mini sistemas</a>
+    <a href="#parte5" class="toc-item"><span class="toc-num">05</span> Projeto final</a>
+    <a href="#nextsteps" class="toc-item"><span class="toc-num">06</span> Próximos passos</a>
+  </div>
+</nav>
+
+<!-- INTRODUÇÃO -->
+<section id="intro" class="intro-section section-block">
+  <div class="part-header">
+    <div class="part-num">00</div>
+    <div class="part-meta">
+      <span class="part-tag">introdução</span>
+      <h2>Antes de começar</h2>
+      <p class="part-desc">O que você vai aprender, como está organizado e como pensar como programador.</p>
+    </div>
+  </div>
+
+  <h3>O que é esta trilha</h3>
+  <p>Esta trilha ensina <strong>Programação Orientada a Objetos (OOP)</strong> em Python de forma progressiva e prática. Cada parte constrói sobre a anterior. O objetivo final é criar um pequeno sistema de cadastro de eventos e aniversariantes rodando no terminal.</p>
+  <p>Você não vai decorar conceitos abstratos. Vai <strong>construir coisas</strong> e entender por que cada decisão existe.</p>
+
+  <h3>O que você precisa saber antes</h3>
+  <ul>
+    <li>Variáveis, tipos básicos (<code>str</code>, <code>int</code>, <code>list</code>)</li>
+    <li>Condicionais (<code>if</code> / <code>else</code>)</li>
+    <li>Laços (<code>for</code> / <code>while</code>)</li>
+    <li>Funções básicas (<code>def</code>, <code>return</code>)</li>
+  </ul>
+
+  <h3>Como pensar em OOP — a versão técnica</h3>
+  <p>Em vez de organizar código como sequências de passos, OOP organiza código em torno de <strong>entidades</strong> — objetos que têm <em>dados</em> (atributos) e <em>comportamentos</em> (métodos). Um <code>Carro</code> sabe sua velocidade e sabe acelerar. Uma <code>Pessoa</code> tem um nome e sabe se apresentar.</p>
+
+  <div class="analogy">
+    <p class="analogy-label">Analogia do dia a dia</p>
+    <p>Imagine uma ficha de cadastro em papel. Ela tem campos (nome, telefone, endereço) e define o que pode ser escrito ali. Uma classe é essa ficha em branco. Quando você preenche uma ficha específica com os dados de "João Silva", você criou um <em>objeto</em> — uma instância dessa classe.</p>
+  </div>
+
+  <h3>Como usar esta trilha</h3>
+  <p>Cada exercício tem uma seção de <strong>conceitos</strong>, uma <strong>explicação</strong>, o <strong>código completo</strong> e a <strong>resposta do desafio</strong> oculta. Tente sempre fazer o desafio antes de revelar a resposta.</p>
+
+  <div class="callout tip">
+    <p class="callout-label">Boas práticas desde o início</p>
+    <p>Use <strong>type hints</strong> em tudo. Use <strong>f-strings</strong>. Use <code>pathlib</code> se precisar de paths. Prefira clareza a esperteza. Código que outros entendem vale mais que código "inteligente".</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- PARTE 1 -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section id="parte1" class="section-block">
+  <div class="part-header">
+    <div class="part-num">01</div>
+    <div class="part-meta">
+      <span class="part-tag">fundamentos</span>
+      <h2>Classe, objeto e atributos</h2>
+      <p class="part-desc">Criar a primeira classe, instanciar objetos, entender <code>self</code> e <code>__init__</code>.</p>
+      <span class="duration-badge">Estimativa: 1–2 horas</span>
+    </div>
+  </div>
+
+  <h3>Conceitos desta parte</h3>
+  <ul>
+    <li><code>class</code> — define um molde</li>
+    <li><code>__init__</code> — inicializa o objeto quando ele é criado</li>
+    <li><code>self</code> — referência ao próprio objeto</li>
+    <li>Atributos de instância — dados que cada objeto carrega</li>
+    <li>Métodos — funções dentro da classe</li>
+    <li>Type hints — anotar tipos de parâmetros e retornos</li>
+  </ul>
+
+  <h3>Por que <code>self</code> existe?</h3>
+  <p>Em Python, quando você chama <code>pessoa.apresentar()</code>, por baixo dos panos isso vira <code>Pessoa.apresentar(pessoa)</code>. O <code>self</code> é o Python passando o objeto como primeiro argumento automaticamente. Ele não é mágico — é só uma convenção de nome.</p>
+
+  <div class="analogy">
+    <p class="analogy-label">Pense assim</p>
+    <p>Você tem uma receita de bolo (classe). Quando faz um bolo de chocolate (objeto), a receita precisa saber em qual tigela está trabalhando — essa "tigela atual" é o <code>self</code>.</p>
+  </div>
+
+  <!-- EX 1.1 -->
+  <div class="exercise-card">
+    <div class="ex-header" onclick="toggle(this)">
+      <span class="ex-num">1.1</span>
+      <span class="ex-title">A primeira classe — Cachorro</span>
+      <div class="ex-concepts">
+        <span class="chip">class</span>
+        <span class="chip">__init__</span>
+        <span class="chip">self</span>
+        <span class="chip">type hints</span>
+      </div>
+      <span class="ex-toggle">▾</span>
+    </div>
+    <div class="ex-body">
+      <h3>Objetivo</h3>
+      <p>Criar a classe mais simples possível. Entender o que <code>__init__</code> faz e por que existe.</p>
+
+      <h3>Explicação</h3>
+      <p><code>__init__</code> é chamado automaticamente quando você faz <code>Cachorro("Rex")</code>. Python cria o objeto vazio e chama <code>__init__</code> com esse objeto como <code>self</code> — para que você possa guardar os dados nele.</p>
+
+      <div class="code-block">
+        <div class="code-label">Python — cachorro.py</div>
+        <pre><span class="kw">class</span> <span class="cls">Cachorro</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="nm">self</span>, nome: <span class="dt">str</span>, raca: <span class="dt">str</span>) -> <span class="kw">None</span>:
+        <span class="nm">self</span>.nome = nome      <span class="cm"># atributo guardado no objeto</span>
+        <span class="nm">self</span>.raca = raca
+
+    <span class="kw">def</span> <span class="fn">latir</span>(<span class="nm">self</span>) -> <span class="dt">str</span>:
+        <span class="kw">return</span> <span class="str">f"{self.nome} diz: Au au!"</span>
+
+
+<span class="cm"># criando objetos</span>
+rex = <span class="cls">Cachorro</span>(<span class="str">"Rex"</span>, <span class="str">"Labrador"</span>)
+luna = <span class="cls">Cachorro</span>(<span class="str">"Luna"</span>, <span class="str">"Poodle"</span>)
+
+<span class="fn">print</span>(rex.<span class="fn">latir</span>())    <span class="cm"># Rex diz: Au au!</span>
+<span class="fn">print</span>(luna.raca)     <span class="cm"># Poodle</span></pre>
+      </div>
+
+      <div class="callout tip">
+        <p class="callout-label">Dica</p>
+        <p><code>-> None</code> em <code>__init__</code> é correto: ele nunca retorna nada. Type hints não mudam o comportamento do código — são uma documentação viva que editores e ferramentas conseguem ler.</p>
+      </div>
+
+      <div class="callout warn">
+        <p class="callout-label">Erro comum</p>
+        <p>Esquecer o <code>self</code> como primeiro parâmetro. Se você fizer <code>def __init__(nome, raca)</code>, quando chamar <code>Cachorro("Rex", "Lab")</code>, Python vai passar o objeto em <code>nome</code> e "Rex" em <code>raca</code> — confusão total.</p>
+      </div>
+
+      <h3>Desafio</h3>
+      <p>Adicione um atributo <code>idade: int</code> e um método <code>info()</code> que retorna uma string no formato:<br>
+      <code>"Rex (Labrador, 3 anos)"</code></p>
+
+      <div class="answer-block">
+        <button class="answer-toggle" onclick="toggleAnswer(this)">▸ Ver resposta</button>
+        <div class="answer-content">
+          <div class="code-block">
+            <div class="code-label">Resposta</div>
+            <pre><span class="kw">class</span> <span class="cls">Cachorro</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="nm">self</span>, nome: <span class="dt">str</span>, raca: <span class="dt">str</span>, idade: <span class="dt">int</span>) -> <span class="kw">None</span>:
+        <span class="nm">self</span>.nome = nome
+        <span class="nm">self</span>.raca = raca
+        <span class="nm">self</span>.idade = idade
+
+    <span class="kw">def</span> <span class="fn">info</span>(<span class="nm">self</span>) -> <span class="dt">str</span>:
+        <span class="kw">return</span> <span class="str">f"{self.nome} ({self.raca}, {self.idade} anos)"</span>
+
+
+rex = <span class="cls">Cachorro</span>(<span class="str">"Rex"</span>, <span class="str">"Labrador"</span>, <span class="nm">3</span>)
+<span class="fn">print</span>(rex.<span class="fn">info</span>())  <span class="cm"># Rex (Labrador, 3 anos)</span></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EX 1.2 -->
+  <div class="exercise-card">
+    <div class="ex-header" onclick="toggle(this)">
+      <span class="ex-num">1.2</span>
+      <span class="ex-title">Método <code>__str__</code> — o objeto se apresenta</span>
+      <div class="ex-concepts">
+        <span class="chip">__str__</span>
+        <span class="chip">print()</span>
+        <span class="chip">representação</span>
+      </div>
+      <span class="ex-toggle">▾</span>
+    </div>
+    <div class="ex-body">
+      <h3>Por que <code>__str__</code> existe</h3>
+      <p>Quando você faz <code>print(rex)</code> sem definir <code>__str__</code>, Python mostra algo como <code>&lt;__main__.Cachorro object at 0x7f...&gt;</code> — pouco útil. Definindo <code>__str__</code>, você controla como o objeto se apresenta em texto.</p>
+
+      <div class="analogy">
+        <p class="analogy-label">Analogia</p>
+        <p>É como um crachá. Sem ele, alguém te veria como "humano número 38472". Com ele, você se apresenta como "Djalma, desenvolvedor". O objeto sabe como se descrever.</p>
+      </div>
+
+      <div class="code-block">
+        <div class="code-label">Python</div>
+        <pre><span class="kw">class</span> <span class="cls">Produto</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="nm">self</span>, nome: <span class="dt">str</span>, preco: <span class="dt">float</span>) -> <span class="kw">None</span>:
+        <span class="nm">self</span>.nome = nome
+        <span class="nm">self</span>.preco = preco
+
+    <span class="kw">def</span> <span class="fn">__str__</span>(<span class="nm">self</span>) -> <span class="dt">str</span>:
+        <span class="kw">return</span> <span class="str">f"{self.nome} — R$ {self.preco:.2f}"</span>
+
+
+caneta = <span class="cls">Produto</span>(<span class="str">"Caneta Azul"</span>, <span class="nm">3.50</span>)
+<span class="fn">print</span>(caneta)  <span class="cm"># Caneta Azul — R$ 3.50</span></pre>
+      </div>
+
+      <div class="callout info">
+        <p class="callout-label">Nota</p>
+        <p>Existe também <code>__repr__</code>, usado para depuração. A convenção: <code>__str__</code> é para humanos, <code>__repr__</code> é para programadores. Por ora, <code>__str__</code> é suficiente.</p>
+      </div>
+
+      <h3>Desafio</h3>
+      <p>Crie uma classe <code>Livro</code> com <code>titulo</code>, <code>autor</code> e <code>ano</code>. Implemente <code>__str__</code> para retornar:<br>
+      <code>"Dom Casmurro — Machado de Assis (1899)"</code></p>
+
+      <div class="answer-block">
+        <button class="answer-toggle" onclick="toggleAnswer(this)">▸ Ver resposta</button>
+        <div class="answer-content">
+          <div class="code-block">
+            <div class="code-label">Resposta</div>
+            <pre><span class="kw">class</span> <span class="cls">Livro</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="nm">self</span>, titulo: <span class="dt">str</span>, autor: <span class="dt">str</span>, ano: <span class="dt">int</span>) -> <span class="kw">None</span>:
+        <span class="nm">self</span>.titulo = titulo
+        <span class="nm">self</span>.autor = autor
+        <span class="nm">self</span>.ano = ano
+
+    <span class="kw">def</span> <span class="fn">__str__</span>(<span class="nm">self</span>) -> <span class="dt">str</span>:
+        <span class="kw">return</span> <span class="str">f"{self.titulo} — {self.autor} ({self.ano})"</span>
+
+
+dom = <span class="cls">Livro</span>(<span class="str">"Dom Casmurro"</span>, <span class="str">"Machado de Assis"</span>, <span class="nm">1899</span>)
+<span class="fn">print</span>(dom)  <span class="cm"># Dom Casmurro — Machado de Assis (1899)</span></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- PARTE 2 -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section id="parte2" class="section-block">
+  <div class="part-header">
+    <div class="part-num">02</div>
+    <div class="part-meta">
+      <span class="part-tag">estado e comportamento</span>
+      <h2>Objetos que mudam e interagem</h2>
+      <p class="part-desc">Métodos que alteram estado. Listas de objetos. Encapsulamento básico.</p>
+      <span class="duration-badge">Estimativa: 2–3 horas</span>
+    </div>
+  </div>
+
+  <h3>Conceitos desta parte</h3>
+  <ul>
+    <li>Atributos mutáveis — valores que mudam ao longo do tempo</li>
+    <li>Métodos que modificam o estado do objeto</li>
+    <li>Listas de objetos (<code>list[Tipo]</code>)</li>
+    <li>Encapsulamento — <code>_atributo</code> (convenção de "privado")</li>
+    <li>Properties básicas com <code>@property</code></li>
+  </ul>
+
+  <h3>O que é encapsulamento — a versão técnica</h3>
+  <p>Esconder detalhes internos e expor apenas uma interface controlada. Um objeto decide o que mostra e como deixa que mudem seus dados. Isso protege o estado interno contra mudanças acidentais.</p>
+
+  <div class="analogy">
+    <p class="analogy-label">Analogia</p>
+    <p>Um velocímetro de carro. Você vê a velocidade — mas não pode alterar o valor diretamente "de fora". Quem muda a velocidade é o motor, com suas regras. Você só lê. O carro encapsula o estado interno.</p>
+  </div>
+
+  <!-- EX 2.1 -->
+  <div class="exercise-card">
+    <div class="ex-header" onclick="toggle(this)">
+      <span class="ex-num">2.1</span>
+      <span class="ex-title">Conta bancária — estado mutável</span>
+      <div class="ex-concepts">
+        <span class="chip">estado</span>
+        <span class="chip">métodos</span>
+        <span class="chip">validação</span>
+      </div>
+      <span class="ex-toggle">▾</span>
+    </div>
+    <div class="ex-body">
+      <h3>Objetivo</h3>
+      <p>Criar um objeto cujo estado muda ao longo do tempo. Entender que métodos são responsáveis por garantir que mudanças sejam válidas.</p>
+
+      <div class="code-block">
+        <div class="code-label">Python — conta.py</div>
+        <pre><span class="kw">class</span> <span class="cls">ContaBancaria</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="nm">self</span>, titular: <span class="dt">str</span>, saldo_inicial: <span class="dt">float</span> = <span class="nm">0.0</span>) -> <span class="kw">None</span>:
+        <span class="nm">self</span>.titular = titular
+        <span class="nm">self</span>._saldo = saldo_inicial  <span class="cm"># _ = convencao "nao mexa diretamente"</span>
+
+    <span class="kw">def</span> <span class="fn">depositar</span>(<span class="nm">self</span>, valor: <span class="dt">float</span>) -> <span class="kw">None</span>:
+        <span class="kw">if</span> valor <= <span class="nm">0</span>:
+            <span class="kw">raise</span> <span class="cls">ValueError</span>(<span class="str">"Valor de depósito deve ser positivo"</span>)
+        <span class="nm">self</span>._saldo += valor
+
+    <span class="kw">def</span> <span class="fn">sacar</span>(<span class="nm">self</span>, valor: <span class="dt">float</span>) -> <span class="kw">None</span>:
+        <span class="kw">if</span> valor > <span class="nm">self</span>._saldo:
+            <span class="kw">raise</span> <span class="cls">ValueError</span>(<span class="str">"Saldo insuficiente"</span>)
+        <span class="nm">self</span>._saldo -= valor
+
+    <span class="dec">@property</span>
+    <span class="kw">def</span> <span class="fn">saldo</span>(<span class="nm">self</span>) -> <span class="dt">float</span>:
+        <span class="kw">return</span> <span class="nm">self</span>._saldo
+
+    <span class="kw">def</span> <span class="fn">__str__</span>(<span class="nm">self</span>) -> <span class="dt">str</span>:
+        <span class="kw">return</span> <span class="str">f"Conta de {self.titular} — R$ {self._saldo:.2f}"</span>
+
+
+conta = <span class="cls">ContaBancaria</span>(<span class="str">"Maria"</span>, <span class="nm">100.0</span>)
+conta.<span class="fn">depositar</span>(<span class="nm">50.0</span>)
+<span class="fn">print</span>(conta.saldo)  <span class="cm"># 150.0  — lê via @property</span>
+<span class="fn">print</span>(conta)        <span class="cm"># Conta de Maria — R$ 150.00</span></pre>
+      </div>
+
+      <div class="callout tip">
+        <p class="callout-label">Por que usar @property?</p>
+        <p><code>@property</code> permite que <code>conta.saldo</code> pareça um atributo normal, mas por dentro executa um método. Você pode adicionar lógica depois sem mudar como quem usa a classe acessa o valor.</p>
+      </div>
+
+      <h3>Desafio</h3>
+      <p>Adicione um histórico de transações: uma lista que registra cada operação como string. Ex: <code>"Depósito: R$ 50.00"</code>, <code>"Saque: R$ 20.00"</code>. Crie um método <code>extrato()</code> que imprime o histórico.</p>
+
+      <div class="answer-block">
+        <button class="answer-toggle" onclick="toggleAnswer(this)">▸ Ver resposta</button>
+        <div class="answer-content">
+          <div class="code-block">
+            <div class="code-label">Resposta</div>
+            <pre><span class="kw">class</span> <span class="cls">ContaBancaria</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="nm">self</span>, titular: <span class="dt">str</span>, saldo_inicial: <span class="dt">float</span> = <span class="nm">0.0</span>) -> <span class="kw">None</span>:
+        <span class="nm">self</span>.titular = titular
+        <span class="nm">self</span>._saldo = saldo_inicial
+        <span class="nm">self</span>._historico: <span class="dt">list</span>[<span class="dt">str</span>] = []
+
+    <span class="kw">def</span> <span class="fn">depositar</span>(<span class="nm">self</span>, valor: <span class="dt">float</span>) -> <span class="kw">None</span>:
+        <span class="kw">if</span> valor <= <span class="nm">0</span>:
+            <span class="kw">raise</span> <span class="cls">ValueError</span>(<span class="str">"Valor deve ser positivo"</span>)
+        <span class="nm">self</span>._saldo += valor
+        <span class="nm">self</span>._historico.<span class="fn">append</span>(<span class="str">f"Depósito: R$ {valor:.2f}"</span>)
+
+    <span class="kw">def</span> <span class="fn">sacar</span>(<span class="nm">self</span>, valor: <span class="dt">float</span>) -> <span class="kw">None</span>:
+        <span class="kw">if</span> valor > <span class="nm">self</span>._saldo:
+            <span class="kw">raise</span> <span class="cls">ValueError</span>(<span class="str">"Saldo insuficiente"</span>)
+        <span class="nm">self</span>._saldo -= valor
+        <span class="nm">self</span>._historico.<span class="fn">append</span>(<span class="str">f"Saque: R$ {valor:.2f}"</span>)
+
+    <span class="kw">def</span> <span class="fn">extrato</span>(<span class="nm">self</span>) -> <span class="kw">None</span>:
+        <span class="fn">print</span>(<span class="str">f"=== Extrato de {self.titular} ==="</span>)
+        <span class="kw">for</span> item <span class="kw">in</span> <span class="nm">self</span>._historico:
+            <span class="fn">print</span>(<span class="str">f"  {item}"</span>)
+        <span class="fn">print</span>(<span class="str">f"  Saldo: R$ {self._saldo:.2f}"</span>)</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EX 2.2 -->
+  <div class="exercise-card">
+    <div class="ex-header" onclick="toggle(this)">
+      <span class="ex-num">2.2</span>
+      <span class="ex-title">Lista de objetos — turma de alunos</span>
+      <div class="ex-concepts">
+        <span class="chip">list[Tipo]</span>
+        <span class="chip">for</span>
+        <span class="chip">busca</span>
+      </div>
+      <span class="ex-toggle">▾</span>
+    </div>
+    <div class="ex-body">
+      <h3>Objetivo</h3>
+      <p>Gerenciar uma coleção de objetos. Adicionar, listar e buscar. Esse padrão é a base de qualquer CRUD.</p>
+
+      <div class="code-block">
+        <div class="code-label">Python — turma.py</div>
+        <pre><span class="kw">class</span> <span class="cls">Aluno</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="nm">self</span>, nome: <span class="dt">str</span>, matricula: <span class="dt">str</span>) -> <span class="kw">None</span>:
+        <span class="nm">self</span>.nome = nome
+        <span class="nm">self</span>.matricula = matricula
+
+    <span class="kw">def</span> <span class="fn">__str__</span>(<span class="nm">self</span>) -> <span class="dt">str</span>:
+        <span class="kw">return</span> <span class="str">f"[{self.matricula}] {self.nome}"</span>
+
+
+<span class="kw">class</span> <span class="cls">Turma</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="nm">self</span>, nome: <span class="dt">str</span>) -> <span class="kw">None</span>:
+        <span class="nm">self</span>.nome = nome
+        <span class="nm">self</span>.alunos: <span class="dt">list</span>[<span class="cls">Aluno</span>] = []  <span class="cm"># lista começa vazia</span>
+
+    <span class="kw">def</span> <span class="fn">adicionar</span>(<span class="nm">self</span>, aluno: <span class="cls">Aluno</span>) -> <span class="kw">None</span>:
+        <span class="nm">self</span>.alunos.<span class="fn">append</span>(aluno)
+
+    <span class="kw">def</span> <span class="fn">listar</span>(<span class="nm">self</span>) -> <span class="kw">None</span>:
+        <span class="fn">print</span>(<span class="str">f"Turma: {self.nome}"</span>)
+        <span class="kw">for</span> aluno <span class="kw">in</span> <span class="nm">self</span>.alunos:
+            <span class="fn">print</span>(<span class="str">f"  {aluno}"</span>)
+
+    <span class="kw">def</span> <span class="fn">buscar</span>(<span class="nm">self</span>, nome: <span class="dt">str</span>) -> <span class="cls">Aluno</span> | <span class="kw">None</span>:
+        <span class="kw">for</span> aluno <span class="kw">in</span> <span class="nm">self</span>.alunos:
+            <span class="kw">if</span> aluno.nome.<span class="fn">lower</span>() == nome.<span class="fn">lower</span>():
+                <span class="kw">return</span> aluno
+        <span class="kw">return</span> <span class="kw">None</span>  <span class="cm"># não encontrado</span>
+
+
+turma = <span class="cls">Turma</span>(<span class="str">"Python Avançado"</span>)
+turma.<span class="fn">adicionar</span>(<span class="cls">Aluno</span>(<span class="str">"Ana"</span>, <span class="str">"2024-001"</span>))
+turma.<span class="fn">adicionar</span>(<span class="cls">Aluno</span>(<span class="str">"Bruno"</span>, <span class="str">"2024-002"</span>))
+turma.<span class="fn">listar</span>()
+
+encontrado = turma.<span class="fn">buscar</span>(<span class="str">"ana"</span>)
+<span class="fn">print</span>(encontrado)  <span class="cm"># [2024-001] Ana</span></pre>
+      </div>
+
+      <div class="callout good">
+        <p class="callout-label">Boa prática — tipo de retorno</p>
+        <p><code>Aluno | None</code> é Python moderno (3.10+). Significa: retorna um <code>Aluno</code> ou <code>None</code>. Antes disso, usava-se <code>Optional[Aluno]</code> do módulo <code>typing</code>. Sempre anote quando um método pode não retornar nada.</p>
+      </div>
+
+      <h3>Desafio</h3>
+      <p>Adicione um método <code>remover(nome: str) -> bool</code> que remove o aluno da lista e retorna <code>True</code> se encontrou e removeu, <code>False</code> se não encontrou.</p>
+
+      <div class="answer-block">
+        <button class="answer-toggle" onclick="toggleAnswer(this)">▸ Ver resposta</button>
+        <div class="answer-content">
+          <div class="code-block">
+            <div class="code-label">Resposta</div>
+            <pre>    <span class="kw">def</span> <span class="fn">remover</span>(<span class="nm">self</span>, nome: <span class="dt">str</span>) -> <span class="dt">bool</span>:
+        aluno = <span class="nm">self</span>.<span class="fn">buscar</span>(nome)
+        <span class="kw">if</span> aluno <span class="kw">is</span> <span class="kw">None</span>:
+            <span class="kw">return</span> <span class="kw">False</span>
+        <span class="nm">self</span>.alunos.<span class="fn">remove</span>(aluno)
+        <span class="kw">return</span> <span class="kw">True</span></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- PARTE 3 -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section id="parte3" class="section-block">
+  <div class="part-header">
+    <div class="part-num">03</div>
+    <div class="part-meta">
+      <span class="part-tag">python moderno</span>
+      <h2>Dataclasses, métodos de classe e estáticos</h2>
+      <p class="part-desc">Menos boilerplate, mais clareza. Ferramentas que Python oferece para escrever OOP de forma mais limpa.</p>
+      <span class="duration-badge">Estimativa: 2–3 horas</span>
+    </div>
+  </div>
+
+  <h3>Conceitos desta parte</h3>
+  <ul>
+    <li><code>@dataclass</code> — gera <code>__init__</code>, <code>__str__</code>, <code>__repr__</code> automaticamente</li>
+    <li><code>field(default_factory=list)</code> — listas padrão em dataclasses</li>
+    <li><code>@staticmethod</code> — função utilitária dentro da classe, sem acesso a <code>self</code></li>
+    <li><code>@classmethod</code> — método alternativo de construção</li>
+  </ul>
+
+  <h3>Por que dataclasses?</h3>
+  <p>Toda classe que só armazena dados acaba com o mesmo boilerplate: <code>__init__</code> atribuindo valores, <code>__str__</code> formatando. <code>@dataclass</code> gera tudo isso. Use quando a classe é principalmente <em>dados</em>.</p>
+
+  <!-- EX 3.1 -->
+  <div class="exercise-card">
+    <div class="ex-header" onclick="toggle(this)">
+      <span class="ex-num">3.1</span>
+      <span class="ex-title">Dataclass — Endereço e Contato</span>
+      <div class="ex-concepts">
+        <span class="chip">@dataclass</span>
+        <span class="chip">field()</span>
+        <span class="chip">composição</span>
+      </div>
+      <span class="ex-toggle">▾</span>
+    </div>
+    <div class="ex-body">
+      <h3>Regra do <code>field(default_factory=list)</code></h3>
+      <p>Você <strong>nunca</strong> pode fazer <code>lista: list = []</code> numa dataclass. O Python compartilharia a mesma lista entre todas as instâncias — bug clássico. Use <code>field(default_factory=list)</code>: cada instância recebe sua própria lista nova.</p>
+
+      <div class="callout warn">
+        <p class="callout-label">Nunca faça isso</p>
+        <p><code>tags: list[str] = []</code> em dataclasses. Todos os objetos compartilhariam a mesma lista. Use <code>field(default_factory=list)</code> sempre.</p>
+      </div>
+
+      <div class="code-block">
+        <div class="code-label">Python — contato.py</div>
+        <pre><span class="kw">from</span> dataclasses <span class="kw">import</span> dataclass, field
+
+
+<span class="dec">@dataclass</span>
+<span class="kw">class</span> <span class="cls">Endereco</span>:
+    rua: <span class="dt">str</span>
+    cidade: <span class="dt">str</span>
+    estado: <span class="dt">str</span>
+
+    <span class="kw">def</span> <span class="fn">__str__</span>(<span class="nm">self</span>) -> <span class="dt">str</span>:
+        <span class="kw">return</span> <span class="str">f"{self.rua}, {self.cidade} — {self.estado}"</span>
+
+
+<span class="dec">@dataclass</span>
+<span class="kw">class</span> <span class="cls">Contato</span>:
+    nome: <span class="dt">str</span>
+    telefone: <span class="dt">str</span>
+    endereco: <span class="cls">Endereco</span>
+    emails: <span class="dt">list</span>[<span class="dt">str</span>] = field(default_factory=<span class="dt">list</span>)
+
+    <span class="kw">def</span> <span class="fn">adicionar_email</span>(<span class="nm">self</span>, email: <span class="dt">str</span>) -> <span class="kw">None</span>:
+        <span class="nm">self</span>.emails.<span class="fn">append</span>(email)
+
+
+end = <span class="cls">Endereco</span>(<span class="str">"Rua das Flores, 42"</span>, <span class="str">"São Paulo"</span>, <span class="str">"SP"</span>)
+ct = <span class="cls">Contato</span>(<span class="str">"Djalma"</span>, <span class="str">"11-9999-0000"</span>, end)
+ct.<span class="fn">adicionar_email</span>(<span class="str">"djalma@empresa.com"</span>)
+
+<span class="fn">print</span>(ct.nome)      <span class="cm"># Djalma</span>
+<span class="fn">print</span>(ct.endereco)  <span class="cm"># Rua das Flores, 42, São Paulo — SP</span>
+<span class="fn">print</span>(ct.emails)    <span class="cm"># ['djalma@empresa.com']</span></pre>
+      </div>
+
+      <div class="callout tip">
+        <p class="callout-label">Composição &gt; Herança</p>
+        <p><code>Contato</code> <em>tem um</em> <code>Endereco</code> — isso é composição. É mais flexível que herança na maioria dos casos práticos. Prefira composição quando a relação é "tem um" em vez de "é um".</p>
+      </div>
+
+      <h3>Desafio</h3>
+      <p>Adicione um <code>@classmethod</code> chamado <code>do_dict</code> que recebe um dicionário e retorna um <code>Contato</code>:</p>
+      <pre style="background:var(--code-bg);border:1px solid var(--border);padding:0.8rem 1rem;font-family:'IBM Plex Mono',monospace;font-size:12.5px;border-radius:3px;color:#c8c0b0">dados = {"nome": "Ana", "telefone": "11-8888", "rua": "Av Brasil", "cidade": "SP", "estado": "SP"}
+ct = Contato.do_dict(dados)</pre>
+
+      <div class="answer-block">
+        <button class="answer-toggle" onclick="toggleAnswer(this)">▸ Ver resposta</button>
+        <div class="answer-content">
+          <div class="code-block">
+            <div class="code-label">Resposta</div>
+            <pre><span class="dec">@classmethod</span>
+<span class="kw">def</span> <span class="fn">do_dict</span>(<span class="kw">cls</span>, dados: <span class="dt">dict</span>) -> <span class="str">"Contato"</span>:
+    end = <span class="cls">Endereco</span>(dados[<span class="str">"rua"</span>], dados[<span class="str">"cidade"</span>], dados[<span class="str">"estado"</span>])
+    <span class="kw">return</span> <span class="kw">cls</span>(
+        nome=dados[<span class="str">"nome"</span>],
+        telefone=dados[<span class="str">"telefone"</span>],
+        endereco=end,
+    )</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EX 3.2 -->
+  <div class="exercise-card">
+    <div class="ex-header" onclick="toggle(this)">
+      <span class="ex-num">3.2</span>
+      <span class="ex-title">Métodos estáticos e de classe — fábrica de objetos</span>
+      <div class="ex-concepts">
+        <span class="chip">@staticmethod</span>
+        <span class="chip">@classmethod</span>
+        <span class="chip">factory pattern</span>
+      </div>
+      <span class="ex-toggle">▾</span>
+    </div>
+    <div class="ex-body">
+      <h3>Quando usar cada um</h3>
+      <p><code>@staticmethod</code>: utilitário que pertence <em>conceitualmente</em> à classe mas não precisa de dados dela. <code>@classmethod</code>: construtores alternativos — formas diferentes de criar o objeto.</p>
+
+      <div class="code-block">
+        <div class="code-label">Python</div>
+        <pre><span class="kw">from</span> datetime <span class="kw">import</span> date
+
+
+<span class="dec">@dataclass</span>
+<span class="kw">class</span> <span class="cls">Pessoa</span>:
+    nome: <span class="dt">str</span>
+    nascimento: date
+
+    <span class="dec">@staticmethod</span>
+    <span class="kw">def</span> <span class="fn">validar_nome</span>(nome: <span class="dt">str</span>) -> <span class="dt">bool</span>:
+        <span class="cm"># sem self — não depende de nenhuma instância</span>
+        <span class="kw">return</span> <span class="dt">bool</span>(nome.<span class="fn">strip</span>()) <span class="kw">and</span> <span class="fn">len</span>(nome) >= <span class="nm">2</span>
+
+    <span class="dec">@classmethod</span>
+    <span class="kw">def</span> <span class="fn">do_texto</span>(<span class="kw">cls</span>, texto: <span class="dt">str</span>) -> <span class="str">"Pessoa"</span>:
+        <span class="cm"># cria Pessoa a partir de "Nome,YYYY-MM-DD"</span>
+        nome, data_str = texto.<span class="fn">split</span>(<span class="str">","</span>)
+        nascimento = date.<span class="fn">fromisoformat</span>(data_str.<span class="fn">strip</span>())
+        <span class="kw">return</span> <span class="kw">cls</span>(nome=nome.<span class="fn">strip</span>(), nascimento=nascimento)
+
+    <span class="kw">def</span> <span class="fn">idade</span>(<span class="nm">self</span>) -> <span class="dt">int</span>:
+        hoje = date.<span class="fn">today</span>()
+        <span class="kw">return</span> hoje.year - <span class="nm">self</span>.nascimento.year
+
+
+p = <span class="cls">Pessoa</span>.<span class="fn">do_texto</span>(<span class="str">"Maria, 1990-04-15"</span>)
+<span class="fn">print</span>(p.nome)          <span class="cm"># Maria</span>
+<span class="fn">print</span>(<span class="cls">Pessoa</span>.<span class="fn">validar_nome</span>(<span class="str">""</span>))  <span class="cm"># False</span></pre>
+      </div>
+
+      <h3>Desafio</h3>
+      <p>Adicione um método <code>is_aniversariante_hoje() -> bool</code> que retorna <code>True</code> se o mês e dia do nascimento são iguais ao de hoje.</p>
+
+      <div class="answer-block">
+        <button class="answer-toggle" onclick="toggleAnswer(this)">▸ Ver resposta</button>
+        <div class="answer-content">
+          <div class="code-block">
+            <div class="code-label">Resposta</div>
+            <pre>    <span class="kw">def</span> <span class="fn">is_aniversariante_hoje</span>(<span class="nm">self</span>) -> <span class="dt">bool</span>:
+        hoje = date.<span class="fn">today</span>()
+        <span class="kw">return</span> (
+            <span class="nm">self</span>.nascimento.month == hoje.month
+            <span class="kw">and</span> <span class="nm">self</span>.nascimento.day == hoje.day
+        )</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- PARTE 4 -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section id="parte4" class="section-block">
+  <div class="part-header">
+    <div class="part-num">04</div>
+    <div class="part-meta">
+      <span class="part-tag">mini sistemas</span>
+      <h2>Menu de terminal e CRUD simples</h2>
+      <p class="part-desc">Juntar tudo em um programa real. Menu interativo, operações CRUD, separação de responsabilidades.</p>
+      <span class="duration-badge">Estimativa: 3–4 horas</span>
+    </div>
+  </div>
+
+  <h3>Conceitos desta parte</h3>
+  <ul>
+    <li>Menu de terminal com <code>while True</code> e <code>input()</code></li>
+    <li>Separação entre modelo (dados) e sistema (lógica de menu)</li>
+    <li>Classe <code>Sistema</code> como orquestradora</li>
+    <li>Organização em múltiplos arquivos</li>
+  </ul>
+
+  <!-- EX 4.1 -->
+  <div class="exercise-card">
+    <div class="ex-header" onclick="toggle(this)">
+      <span class="ex-num">4.1</span>
+      <span class="ex-title">Agenda de contatos com menu</span>
+      <div class="ex-concepts">
+        <span class="chip">CRUD</span>
+        <span class="chip">menu</span>
+        <span class="chip">while True</span>
+        <span class="chip">separação</span>
+      </div>
+      <span class="ex-toggle">▾</span>
+    </div>
+    <div class="ex-body">
+      <h3>Estrutura de arquivos</h3>
+      <div class="code-block">
+        <div class="code-label">Estrutura</div>
+        <pre>agenda/
+├── models.py    <span class="cm"># Contato</span>
+├── sistema.py   <span class="cm"># SistemaAgenda</span>
+└── main.py      <span class="cm"># ponto de entrada</span></pre>
+      </div>
+
+      <h3>Por que separar em arquivos?</h3>
+      <p>Quando o modelo muda (ex: adicionar um campo), você mexe só em <code>models.py</code>. Quando a lógica do menu muda, mexe em <code>sistema.py</code>. Cada arquivo tem uma <strong>única razão para mudar</strong>.</p>
+
+      <div class="code-block">
+        <div class="code-label">models.py</div>
+        <pre><span class="kw">from</span> dataclasses <span class="kw">import</span> dataclass
+
+
+<span class="dec">@dataclass</span>
+<span class="kw">class</span> <span class="cls">Contato</span>:
+    nome: <span class="dt">str</span>
+    telefone: <span class="dt">str</span>
+    email: <span class="dt">str</span>
+
+    <span class="kw">def</span> <span class="fn">__str__</span>(<span class="nm">self</span>) -> <span class="dt">str</span>:
+        <span class="kw">return</span> <span class="str">f"{self.nome} | {self.telefone} | {self.email}"</span></pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-label">sistema.py</div>
+        <pre><span class="kw">from</span> models <span class="kw">import</span> <span class="cls">Contato</span>
+
+
+<span class="kw">class</span> <span class="cls">SistemaAgenda</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="nm">self</span>) -> <span class="kw">None</span>:
+        <span class="nm">self</span>._contatos: <span class="dt">list</span>[<span class="cls">Contato</span>] = []
+
+    <span class="kw">def</span> <span class="fn">adicionar</span>(<span class="nm">self</span>, nome: <span class="dt">str</span>, tel: <span class="dt">str</span>, email: <span class="dt">str</span>) -> <span class="kw">None</span>:
+        <span class="nm">self</span>._contatos.<span class="fn">append</span>(<span class="cls">Contato</span>(nome, tel, email))
+        <span class="fn">print</span>(<span class="str">f"Contato '{nome}' adicionado."</span>)
+
+    <span class="kw">def</span> <span class="fn">listar</span>(<span class="nm">self</span>) -> <span class="kw">None</span>:
+        <span class="kw">if not</span> <span class="nm">self</span>._contatos:
+            <span class="fn">print</span>(<span class="str">"Nenhum contato cadastrado."</span>)
+            <span class="kw">return</span>
+        <span class="kw">for</span> i, ct <span class="kw">in</span> <span class="fn">enumerate</span>(<span class="nm">self</span>._contatos, <span class="nm">1</span>):
+            <span class="fn">print</span>(<span class="str">f"  {i}. {ct}"</span>)
+
+    <span class="kw">def</span> <span class="fn">executar</span>(<span class="nm">self</span>) -> <span class="kw">None</span>:
+        <span class="kw">while</span> <span class="kw">True</span>:
+            <span class="fn">print</span>(<span class="str">"\n[1] Adicionar  [2] Listar  [0] Sair"</span>)
+            opcao = <span class="fn">input</span>(<span class="str">"Opção: "</span>).<span class="fn">strip</span>()
+
+            <span class="kw">if</span> opcao == <span class="str">"1"</span>:
+                nome  = <span class="fn">input</span>(<span class="str">"Nome: "</span>)
+                tel   = <span class="fn">input</span>(<span class="str">"Telefone: "</span>)
+                email = <span class="fn">input</span>(<span class="str">"Email: "</span>)
+                <span class="nm">self</span>.<span class="fn">adicionar</span>(nome, tel, email)
+            <span class="kw">elif</span> opcao == <span class="str">"2"</span>:
+                <span class="nm">self</span>.<span class="fn">listar</span>()
+            <span class="kw">elif</span> opcao == <span class="str">"0"</span>:
+                <span class="fn">print</span>(<span class="str">"Encerrando."</span>)
+                <span class="kw">break</span>
+            <span class="kw">else</span>:
+                <span class="fn">print</span>(<span class="str">"Opção inválida."</span>)</pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-label">main.py</div>
+        <pre><span class="kw">from</span> sistema <span class="kw">import</span> <span class="cls">SistemaAgenda</span>
+
+<span class="kw">if</span> __name__ == <span class="str">"__main__"</span>:
+    <span class="cls">SistemaAgenda</span>().<span class="fn">executar</span>()</pre>
+      </div>
+
+      <div class="callout tip">
+        <p class="callout-label"><code>if __name__ == "__main__"</code></p>
+        <p>Esse bloco só executa quando você roda <code>main.py</code> diretamente. Se outro arquivo importar <code>main.py</code>, o bloco não executa. Sempre use em pontos de entrada.</p>
+      </div>
+
+      <h3>Desafio</h3>
+      <p>Implemente a opção <code>[3] Remover</code>: mostra a lista numerada, pede um número e remove o contato na posição correspondente.</p>
+
+      <div class="answer-block">
+        <button class="answer-toggle" onclick="toggleAnswer(this)">▸ Ver resposta</button>
+        <div class="answer-content">
+          <div class="code-block">
+            <div class="code-label">Adicionar no menu e criar o método</div>
+            <pre"><span class="cm"># dentro de SistemaAgenda:</span>
+    <span class="kw">def</span> <span class="fn">remover</span>(<span class="nm">self</span>, indice: <span class="dt">int</span>) -> <span class="kw">None</span>:
+        <span class="kw">if not</span> (<span class="nm">1</span> <= indice <= <span class="fn">len</span>(<span class="nm">self</span>._contatos)):
+            <span class="fn">print</span>(<span class="str">"Índice inválido."</span>)
+            <span class="kw">return</span>
+        removido = <span class="nm">self</span>._contatos.<span class="fn">pop</span>(indice - <span class="nm">1</span>)
+        <span class="fn">print</span>(<span class="str">f"'{removido.nome}' removido."</span>)
+
+<span class="cm"># no menu:</span>
+            <span class="kw">elif</span> opcao == <span class="str">"3"</span>:
+                <span class="nm">self</span>.<span class="fn">listar</span>()
+                num = <span class="fn">int</span>(<span class="fn">input</span>(<span class="str">"Número: "</span>))
+                <span class="nm">self</span>.<span class="fn">remover</span>(num)</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- PARTE 5 — PROJETO FINAL -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section id="parte5" class="section-block">
+  <div class="part-header">
+    <div class="part-num">05</div>
+    <div class="part-meta">
+      <span class="part-tag">projeto final</span>
+      <h2>Sistema de Eventos e Aniversariantes</h2>
+      <p class="part-desc">Construir um sistema real, completo, passo a passo — integrando tudo que foi aprendido.</p>
+      <span class="duration-badge">Estimativa: 4–6 horas</span>
+    </div>
+  </div>
+
+  <h3>O que o sistema faz</h3>
+  <p>Um programa de terminal para gerenciar eventos (festas, reuniões, etc.) com cadastro de pessoas, locais e verificação de quem faz aniversário na data do evento.</p>
+
+  <div class="project-final">
+    <div class="project-header">
+      <h2>Roteiro — 8 etapas progressivas</h2>
+      <p style="color:var(--text-muted);font-size:14px">Cada etapa é um exercício independente. Complete uma antes de avançar.</p>
+    </div>
+    <div class="project-body">
+      <ul class="step-list">
+        <li><span class="step-num">E1</span> Classe <code>Pessoa</code> — nome, nascimento, <code>is_aniversariante(data)</code></li>
+        <li><span class="step-num">E2</span> Classe <code>Local</code> — nome, endereço, capacidade</li>
+        <li><span class="step-num">E3</span> Classe <code>Evento</code> — nome, data, local, lista de convidados</li>
+        <li><span class="step-num">E4</span> Método <code>Evento.adicionar_convidado</code> com validação de capacidade</li>
+        <li><span class="step-num">E5</span> Método <code>Evento.aniversariantes()</code> — retorna quem faz aniversário na data</li>
+        <li><span class="step-num">E6</span> Classe <code>Sistema</code> — gerencia pessoas e eventos</li>
+        <li><span class="step-num">E7</span> Menu interativo completo com todas as operações</li>
+        <li><span class="step-num">E8</span> Relatório final — eventos do mês, aniversariantes, total de convidados</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ETAPA 1 -->
+  <div class="exercise-card" style="margin-top:1.5rem">
+    <div class="ex-header" onclick="toggle(this)">
+      <span class="ex-num">E1</span>
+      <span class="ex-title">Classe Pessoa</span>
+      <div class="ex-concepts"><span class="chip">@dataclass</span><span class="chip">date</span><span class="chip">validação</span></div>
+      <span class="ex-toggle">▾</span>
+    </div>
+    <div class="ex-body">
+      <div class="code-block">
+        <div class="code-label">models/pessoa.py</div>
+        <pre><span class="kw">from</span> dataclasses <span class="kw">import</span> dataclass
+<span class="kw">from</span> datetime <span class="kw">import</span> date
+
+
+<span class="dec">@dataclass</span>
+<span class="kw">class</span> <span class="cls">Pessoa</span>:
+    nome: <span class="dt">str</span>
+    nascimento: date
+
+    <span class="kw">def</span> <span class="fn">is_aniversariante</span>(<span class="nm">self</span>, data: date) -> <span class="dt">bool</span>:
+        <span class="kw">return</span> (
+            <span class="nm">self</span>.nascimento.month == data.month
+            <span class="kw">and</span> <span class="nm">self</span>.nascimento.day == data.day
+        )
+
+    <span class="kw">def</span> <span class="fn">idade_em</span>(<span class="nm">self</span>, data: date) -> <span class="dt">int</span>:
+        anos = data.year - <span class="nm">self</span>.nascimento.year
+        <span class="kw">if</span> (data.month, data.day) < (<span class="nm">self</span>.nascimento.month, <span class="nm">self</span>.nascimento.day):
+            anos -= <span class="nm">1</span>
+        <span class="kw">return</span> anos
+
+    <span class="kw">def</span> <span class="fn">__str__</span>(<span class="nm">self</span>) -> <span class="dt">str</span>:
+        <span class="kw">return</span> <span class="str">f"{self.nome} (nasc. {self.nascimento.strftime('%d/%m/%Y')})"</span></pre>
+      </div>
+      <h3>Desafio</h3>
+      <p>Adicione um <code>@classmethod</code> <code>Pessoa.do_str(texto)</code> que cria uma pessoa a partir de <code>"Nome,DD/MM/YYYY"</code>.</p>
+      <div class="answer-block">
+        <button class="answer-toggle" onclick="toggleAnswer(this)">▸ Ver resposta</button>
+        <div class="answer-content">
+          <div class="code-block">
+            <div class="code-label">Resposta</div>
+            <pre>    <span class="dec">@classmethod</span>
+    <span class="kw">def</span> <span class="fn">do_str</span>(<span class="kw">cls</span>, texto: <span class="dt">str</span>) -> <span class="str">"Pessoa"</span>:
+        nome, data_str = texto.<span class="fn">split</span>(<span class="str">","</span>)
+        nascimento = date.<span class="fn">strptime</span>(data_str.<span class="fn">strip</span>(), <span class="str">"%d/%m/%Y"</span>)
+        <span class="kw">return</span> <span class="kw">cls</span>(nome=nome.<span class="fn">strip</span>(), nascimento=nascimento)</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ETAPA 3 -->
+  <div class="exercise-card">
+    <div class="ex-header" onclick="toggle(this)">
+      <span class="ex-num">E3–E5</span>
+      <span class="ex-title">Classe Evento — convidados e aniversariantes</span>
+      <div class="ex-concepts"><span class="chip">composição</span><span class="chip">list comprehension</span><span class="chip">validação</span></div>
+      <span class="ex-toggle">▾</span>
+    </div>
+    <div class="ex-body">
+      <div class="code-block">
+        <div class="code-label">models/evento.py</div>
+        <pre><span class="kw">from</span> dataclasses <span class="kw">import</span> dataclass, field
+<span class="kw">from</span> datetime <span class="kw">import</span> date
+<span class="kw">from</span> models.pessoa <span class="kw">import</span> <span class="cls">Pessoa</span>
+<span class="kw">from</span> models.local <span class="kw">import</span> <span class="cls">Local</span>
+
+
+<span class="dec">@dataclass</span>
+<span class="kw">class</span> <span class="cls">Evento</span>:
+    nome: <span class="dt">str</span>
+    data: date
+    local: <span class="cls">Local</span>
+    convidados: <span class="dt">list</span>[<span class="cls">Pessoa</span>] = field(default_factory=<span class="dt">list</span>)
+
+    <span class="kw">def</span> <span class="fn">adicionar_convidado</span>(<span class="nm">self</span>, pessoa: <span class="cls">Pessoa</span>) -> <span class="kw">None</span>:
+        <span class="kw">if</span> <span class="fn">len</span>(<span class="nm">self</span>.convidados) >= <span class="nm">self</span>.local.capacidade:
+            <span class="kw">raise</span> <span class="cls">ValueError</span>(<span class="str">f"Local lotado: capacidade {self.local.capacidade}"</span>)
+        <span class="nm">self</span>.convidados.<span class="fn">append</span>(pessoa)
+
+    <span class="kw">def</span> <span class="fn">aniversariantes</span>(<span class="nm">self</span>) -> <span class="dt">list</span>[<span class="cls">Pessoa</span>]:
+        <span class="cm"># list comprehension: pythônico e legível</span>
+        <span class="kw">return</span> [p <span class="kw">for</span> p <span class="kw">in</span> <span class="nm">self</span>.convidados <span class="kw">if</span> p.<span class="fn">is_aniversariante</span>(<span class="nm">self</span>.data)]
+
+    <span class="kw">def</span> <span class="fn">relatorio</span>(<span class="nm">self</span>) -> <span class="kw">None</span>:
+        <span class="fn">print</span>(<span class="str">f"\n{'='*40}"</span>)
+        <span class="fn">print</span>(<span class="str">f"Evento: {self.nome}"</span>)
+        <span class="fn">print</span>(<span class="str">f"Data:   {self.data.strftime('%d/%m/%Y')}"</span>)
+        <span class="fn">print</span>(<span class="str">f"Local:  {self.local.nome} (cap. {self.local.capacidade})"</span>)
+        <span class="fn">print</span>(<span class="str">f"Convidados: {len(self.convidados)}"</span>)
+
+        aniv = <span class="nm">self</span>.<span class="fn">aniversariantes</span>()
+        <span class="kw">if</span> aniv:
+            <span class="fn">print</span>(<span class="str">"\nAniversariantes do dia:"</span>)
+            <span class="kw">for</span> p <span class="kw">in</span> aniv:
+                anos = p.<span class="fn">idade_em</span>(<span class="nm">self</span>.data)
+                <span class="fn">print</span>(<span class="str">f"  🎂 {p.nome} — {anos} anos"</span>)</pre>
+      </div>
+
+      <div class="callout tip">
+        <p class="callout-label">List comprehension</p>
+        <p><code>[p for p in lista if condicao]</code> é a forma pythônica de filtrar listas. É equivalente a um <code>for</code> com <code>if</code> e <code>append</code>, mas mais curto e legível. Use para filtragens simples.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ETAPA FINAL -->
+  <div class="exercise-card">
+    <div class="ex-header" onclick="toggle(this)">
+      <span class="ex-num">E6–E8</span>
+      <span class="ex-title">Sistema completo — código final integrado</span>
+      <div class="ex-concepts"><span class="chip">orquestração</span><span class="chip">menu</span><span class="chip">main.py</span></div>
+      <span class="ex-toggle">▾</span>
+    </div>
+    <div class="ex-body">
+      <h3>Estrutura final</h3>
+      <div class="code-block">
+        <div class="code-label">Organização</div>
+        <pre>sistema_eventos/
+├── main.py
+├── sistema.py
+└── models/
+    ├── __init__.py
+    ├── pessoa.py
+    ├── local.py
+    └── evento.py</pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-label">sistema.py — orquestrador completo</div>
+        <pre><span class="kw">from</span> datetime <span class="kw">import</span> date
+<span class="kw">from</span> models.pessoa <span class="kw">import</span> <span class="cls">Pessoa</span>
+<span class="kw">from</span> models.local <span class="kw">import</span> <span class="cls">Local</span>
+<span class="kw">from</span> models.evento <span class="kw">import</span> <span class="cls">Evento</span>
+
+
+<span class="kw">class</span> <span class="cls">SistemaEventos</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="nm">self</span>) -> <span class="kw">None</span>:
+        <span class="nm">self</span>._pessoas: <span class="dt">list</span>[<span class="cls">Pessoa</span>] = []
+        <span class="nm">self</span>._locais: <span class="dt">list</span>[<span class="cls">Local</span>] = []
+        <span class="nm">self</span>._eventos: <span class="dt">list</span>[<span class="cls">Evento</span>] = []
+
+    <span class="cm"># ── helpers de cadastro ──────────────────────────────</span>
+
+    <span class="kw">def</span> <span class="fn">_cadastrar_pessoa</span>(<span class="nm">self</span>) -> <span class="kw">None</span>:
+        nome  = <span class="fn">input</span>(<span class="str">"Nome: "</span>)
+        nasc  = <span class="fn">input</span>(<span class="str">"Nascimento (DD/MM/AAAA): "</span>)
+        data  = date.<span class="fn">strptime</span>(nasc, <span class="str">"%d/%m/%Y"</span>)
+        <span class="nm">self</span>._pessoas.<span class="fn">append</span>(<span class="cls">Pessoa</span>(nome, data))
+        <span class="fn">print</span>(<span class="str">f"Pessoa '{nome}' cadastrada."</span>)
+
+    <span class="kw">def</span> <span class="fn">_cadastrar_local</span>(<span class="nm">self</span>) -> <span class="kw">None</span>:
+        nome = <span class="fn">input</span>(<span class="str">"Nome do local: "</span>)
+        cap  = <span class="dt">int</span>(<span class="fn">input</span>(<span class="str">"Capacidade: "</span>))
+        <span class="nm">self</span>._locais.<span class="fn">append</span>(<span class="cls">Local</span>(nome, cap))
+        <span class="fn">print</span>(<span class="str">f"Local '{nome}' cadastrado."</span>)
+
+    <span class="kw">def</span> <span class="fn">_criar_evento</span>(<span class="nm">self</span>) -> <span class="kw">None</span>:
+        <span class="kw">if not</span> <span class="nm">self</span>._locais:
+            <span class="fn">print</span>(<span class="str">"Cadastre um local primeiro."</span>)
+            <span class="kw">return</span>
+        nome  = <span class="fn">input</span>(<span class="str">"Nome do evento: "</span>)
+        dt    = date.<span class="fn">strptime</span>(<span class="fn">input</span>(<span class="str">"Data (DD/MM/AAAA): "</span>), <span class="str">"%d/%m/%Y"</span>)
+        <span class="kw">for</span> i, l <span class="kw">in</span> <span class="fn">enumerate</span>(<span class="nm">self</span>._locais, <span class="nm">1</span>):
+            <span class="fn">print</span>(<span class="str">f"  {i}. {l.nome}"</span>)
+        idx   = <span class="dt">int</span>(<span class="fn">input</span>(<span class="str">"Local (número): "</span>)) - <span class="nm">1</span>
+        <span class="nm">self</span>._eventos.<span class="fn">append</span>(<span class="cls">Evento</span>(nome, dt, <span class="nm">self</span>._locais[idx]))
+        <span class="fn">print</span>(<span class="str">f"Evento '{nome}' criado."</span>)
+
+    <span class="cm"># ── menu principal ────────────────────────────────────</span>
+
+    <span class="kw">def</span> <span class="fn">executar</span>(<span class="nm">self</span>) -> <span class="kw">None</span>:
+        <span class="kw">while</span> <span class="kw">True</span>:
+            <span class="fn">print</span>(<span class="str">"\n[1] Pessoa  [2] Local  [3] Evento  [4] Relatório  [0] Sair"</span>)
+            op = <span class="fn">input</span>(<span class="str">"Opção: "</span>).<span class="fn">strip</span>()
+            <span class="kw">if</span>   op == <span class="str">"1"</span>: <span class="nm">self</span>.<span class="fn">_cadastrar_pessoa</span>()
+            <span class="kw">elif</span> op == <span class="str">"2"</span>: <span class="nm">self</span>.<span class="fn">_cadastrar_local</span>()
+            <span class="kw">elif</span> op == <span class="str">"3"</span>: <span class="nm">self</span>.<span class="fn">_criar_evento</span>()
+            <span class="kw">elif</span> op == <span class="str">"4"</span>:
+                <span class="kw">for</span> ev <span class="kw">in</span> <span class="nm">self</span>._eventos:
+                    ev.<span class="fn">relatorio</span>()
+            <span class="kw">elif</span> op == <span class="str">"0"</span>: <span class="kw">break</span>
+            <span class="kw">else</span>: <span class="fn">print</span>(<span class="str">"Inválido."</span>)</pre>
+      </div>
+
+      <div class="callout good">
+        <p class="callout-label">O que você construiu</p>
+        <p>Um sistema completo com 4 classes, composição, dataclasses, validações, menu de terminal e separação em arquivos. Isso já é um projeto Python real e bem organizado.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRÓXIMOS PASSOS -->
+<section id="nextsteps" class="section-block">
+  <div class="part-header">
+    <div class="part-num">06</div>
+    <div class="part-meta">
+      <span class="part-tag">evolução</span>
+      <h2>Próximos passos</h2>
+      <p class="part-desc">Como tornar este projeto mais profissional e o que estudar em seguida.</p>
+    </div>
+  </div>
+
+  <div class="next-grid">
+    <div class="next-card">
+      <p class="nc-label">Persistência</p>
+      <p>Salvar e carregar dados com <code>json</code> ou <code>sqlite3</code>. Os objetos somem quando o programa fecha — isso resolve o problema.</p>
+    </div>
+    <div class="next-card">
+      <p class="nc-label">Testes</p>
+      <p>Aprender <code>pytest</code> para testar cada método isoladamente. Comece testando <code>is_aniversariante</code> e <code>aniversariantes</code>.</p>
+    </div>
+    <div class="next-card">
+      <p class="nc-label">Herança</p>
+      <p>Criar <code>EventoOnline</code> e <code>EventoPresencial</code> como subclasses de <code>Evento</code>. Entender quando herança faz sentido — e quando composição é melhor.</p>
+    </div>
+    <div class="next-card">
+      <p class="nc-label">Interfaces / ABC</p>
+      <p>Usar <code>abc.ABC</code> e <code>@abstractmethod</code> para definir contratos entre classes — base do polimorfismo real.</p>
+    </div>
+    <div class="next-card">
+      <p class="nc-label">Exceções próprias</p>
+      <p>Criar <code>class CapacidadeExcedida(Exception)</code> em vez de lançar <code>ValueError</code> genérico. Mensagens de erro mais claras.</p>
+    </div>
+    <div class="next-card">
+      <p class="nc-label">Refatoração</p>
+      <p>Mover validações para métodos estáticos de validação. Separar a lógica de display da lógica de negócio.</p>
+    </div>
+  </div>
+
+  <div class="callout info" style="margin-top:2rem">
+    <p class="callout-label">Leitura recomendada</p>
+    <p><em>Clean Code</em> (Robert Martin) para princípios gerais. <em>Fluent Python</em> (Luciano Ramalho) para Python profundo. A documentação oficial do Python em <code>docs.python.org</code> é excelente e gratuita.</p>
+  </div>
+</section>
+
+  <div data-component="footer"></div>
+  </div>
+
+  <script type="module" src="../js/site-data.js"></script>
+  <script type="module" src="../js/components.js"></script>
+  <script type="module" src="../js/ui.js"></script>
+</body>
+</html>
