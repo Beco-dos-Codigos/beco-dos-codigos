@@ -1,0 +1,934 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Trilha Python Básico — Beco dos Códigos</title>
+  <link rel="stylesheet" href="../css/index.css" />
+  <style>
+  :root {
+    --bg: #050914;
+    --surface: #08112a;
+    --surface2: #101b39;
+    --surface3: #151b34;
+    --border: rgba(240, 87, 248, 0.15);
+    --border-light: rgba(240, 87, 248, 0.2);
+    --text: #e5f4ff;
+    --text-muted: #9bb8d4;
+    --text-dim: #6a7a9a;
+    --accent: #f057f8;
+    --accent2: #7f6bff;
+    --accent3: #a877ff;
+    --accent-red: #ff7a9a;
+    --accent-purple: #c87af0;
+    --code-bg: #0b0f23;
+    --tag-bg: rgba(240, 87, 248, 0.08);
+    --tag-border: rgba(240, 87, 248, 0.18);
+    --tag-text: #b6a3ff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: radial-gradient(circle at top left, rgba(240, 87, 248, 0.14), transparent 28%),
+      linear-gradient(180deg, #04070f 0%, #050914 36%, #020407 100%);
+    color: var(--text);
+    font-family: 'Inter', 'Arial', sans-serif;
+    font-size: 15px;
+    line-height: 1.75;
+    font-weight: 300;
+  }
+
+  .page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── LAYOUT ── */
+  .page { max-width: 860px; margin: 0 auto; padding: 0 2rem 6rem; }
+
+  /* ── HEADER ── */
+  .site-header {
+    border-bottom: 1px solid var(--border);
+    padding: 2.5rem 0 2rem;
+    margin-bottom: 4rem;
+  }
+  .header-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+  }
+  .site-header h1 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--text);
+    letter-spacing: -0.02em;
+  }
+  .site-header h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .site-header .subtitle {
+    margin-top: 1rem;
+    color: var(--text-muted);
+    font-size: 15px;
+    max-width: 560px;
+    line-height: 1.65;
+  }
+
+  /* ── TOC ── */
+  .toc {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1.75rem 2rem;
+    margin-bottom: 4rem;
+  }
+  .toc-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 1.2rem;
+  }
+  .toc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.5rem 2rem;
+  }
+  .toc-item {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    color: var(--text-muted);
+    font-size: 14px;
+    cursor: pointer;
+    transition: color 0.15s;
+    text-decoration: none;
+  }
+  .toc-item:hover { color: var(--accent); }
+  .toc-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    flex-shrink: 0;
+  }
+
+  /* ── INTRO SECTION ── */
+  .intro-section { margin-bottom: 5rem; }
+
+  /* ── SECTION HEADER ── */
+  .section-block { margin-bottom: 5rem; }
+  .part-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .part-num {
+    font-family: 'Fraunces', serif;
+    font-size: 3.5rem;
+    font-weight: 300;
+    line-height: 1;
+    color: var(--border-light);
+    flex-shrink: 0;
+    margin-top: -0.3rem;
+  }
+  .part-meta {}
+  .part-tag {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--tag-text);
+    background: var(--tag-bg);
+    border: 1px solid var(--tag-border);
+    border-radius: 2px;
+    padding: 2px 8px;
+    margin-bottom: 0.6rem;
+  }
+  .part-meta h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.6rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--text);
+    margin-bottom: 0.4rem;
+  }
+  .part-meta .part-desc {
+    color: var(--text-muted);
+    font-size: 14px;
+  }
+  .duration-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--accent2);
+    margin-top: 0.5rem;
+  }
+  .duration-badge::before {
+    content: '◷';
+    font-size: 12px;
+  }
+
+  /* ── EXERCISE CARD ── */
+  .exercise-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+  }
+  .ex-header {
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    cursor: pointer;
+    user-select: none;
+  }
+  .ex-header:hover { background: var(--surface2); }
+  .ex-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--text-dim);
+    flex-shrink: 0;
+    min-width: 2.2rem;
+  }
+  .ex-title {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text);
+    flex: 1;
+  }
+  .ex-concepts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .chip {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    background: var(--surface3);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 2px 7px;
+    border-radius: 2px;
+  }
+  .ex-toggle {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+    color: var(--text-dim);
+    flex-shrink: 0;
+    transition: transform 0.2s;
+  }
+  .ex-body {
+    padding: 1.5rem;
+    display: none;
+  }
+  .ex-body.open { display: block; }
+  .ex-toggle.open { transform: rotate(180deg); }
+
+  /* ── CONTENT ELEMENTS ── */
+  h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--accent);
+    margin: 1.5rem 0 0.6rem;
+    letter-spacing: 0.01em;
+  }
+  h3:first-child { margin-top: 0; }
+
+  p { margin-bottom: 0.9rem; color: var(--text-muted); font-size: 14px; }
+  p strong { color: var(--text); font-weight: 500; }
+
+  ul, ol {
+    margin: 0.5rem 0 1rem 1.2rem;
+    color: var(--text-muted);
+    font-size: 14px;
+  }
+  li { margin-bottom: 0.3rem; }
+
+  /* ── CODE BLOCKS ── */
+  .code-block {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    margin: 1rem 0;
+    overflow: hidden;
+  }
+  .code-label {
+    padding: 0.4rem 1rem;
+    border-bottom: 1px solid var(--border);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+  pre {
+    padding: 1.25rem 1.25rem;
+    overflow-x: auto;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    line-height: 1.65;
+    color: #c8c0b0;
+  }
+  .kw { color: #c87a7a; }
+  .fn { color: #7ab8c8; }
+  .cls { color: #c8b87a; }
+  .str { color: #a8c87a; }
+  .cm { color: #4a4840; font-style: italic; }
+  .nm { color: #b07ac8; }
+  .dt { color: #d4aa60; }
+  .dec { color: #c87ab0; }
+
+  /* ── CALLOUT BOXES ── */
+  .callout {
+    border-left: 2px solid var(--border-light);
+    padding: 0.9rem 1.2rem;
+    margin: 1rem 0;
+    background: var(--surface2);
+    border-radius: 0 3px 3px 0;
+    font-size: 13.5px;
+  }
+  .callout.tip { border-left-color: var(--accent); }
+  .callout.warn { border-left-color: var(--accent-red); }
+  .callout.info { border-left-color: var(--accent2); }
+  .callout.good { border-left-color: var(--accent3); }
+  .callout-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+  .callout.tip .callout-label { color: var(--accent); }
+  .callout.warn .callout-label { color: var(--accent-red); }
+  .callout.info .callout-label { color: var(--accent2); }
+  .callout.good .callout-label { color: var(--accent3); }
+  .callout p { font-size: 13.5px; margin-bottom: 0; color: var(--text-muted); }
+
+  /* ── ANALOGY BOX ── */
+  .analogy {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1.2rem 1.4rem;
+    margin: 1rem 0;
+  }
+  .analogy-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-purple);
+    margin-bottom: 0.5rem;
+  }
+  .analogy p { font-size: 13.5px; color: var(--text-muted); margin-bottom: 0; }
+
+  /* ── ANSWER SECTION ── */
+  .answer-block {
+    margin-top: 1.5rem;
+    border-top: 1px dashed var(--border);
+    padding-top: 1.5rem;
+  }
+  .answer-toggle {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    padding: 0.45rem 1rem;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.15s;
+    margin-bottom: 1rem;
+  }
+  .answer-toggle:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .answer-content { display: none; }
+  .answer-content.open { display: block; }
+
+  /* ── PROJECT FINAL ── */
+  .project-final {
+    background: var(--surface);
+    border: 1px solid var(--border-light);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 1.5rem;
+  }
+  .project-header {
+    background: var(--surface2);
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .project-header h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 0.4rem;
+  }
+  .project-body { padding: 1.75rem 2rem; }
+  .step-list { list-style: none; margin: 0; padding: 0; }
+  .step-list li {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: var(--text-muted);
+    font-size: 14px;
+  }
+  .step-list li:last-child { border-bottom: none; }
+  .step-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    min-width: 2rem;
+  }
+
+  /* ── NEXT STEPS ── */
+  .next-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+  .next-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1.2rem 1.4rem;
+  }
+  .next-card .nc-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 0.5rem;
+  }
+  .next-card p { font-size: 13.5px; color: var(--text-muted); margin-bottom: 0; }
+
+  /* ── INLINE CODE ── */
+  code {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12.5px;
+    color: var(--accent);
+    background: var(--tag-bg);
+    border: 1px solid var(--tag-border);
+    padding: 1px 5px;
+    border-radius: 2px;
+  }
+
+  /* ── HR ── */
+  hr { border: none; border-top: 1px solid var(--border); margin: 3rem 0; }
+
+  /* ── FOOTER ── */
+  footer {
+    margin-top: 5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.05em;
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+
+
+
+  <div class="page">
+    <div data-component="header"></div>
+
+    <!-- ÍNDICE -->
+    <nav class="toc">
+      <p class="toc-label">Índice</p>
+
+      <div class="toc-grid">
+        <a href="#intro" class="toc-item"><span class="toc-num">00</span> Introdução</a>
+        <a href="#parte1" class="toc-item"><span class="toc-num">01</span> Instalação do Python</a>
+        <a href="#parte2" class="toc-item"><span class="toc-num">02</span> Terminal e comandos</a>
+        <a href="#parte3" class="toc-item"><span class="toc-num">03</span> Pip e pacotes</a>
+        <a href="#parte4" class="toc-item"><span class="toc-num">04</span> Ambientes virtuais</a>
+        <a href="#parte5" class="toc-item"><span class="toc-num">05</span> Primeiro código Python</a>
+        <a href="#parte6" class="toc-item"><span class="toc-num">06</span> Variáveis e tipos</a>
+        <a href="#parte7" class="toc-item"><span class="toc-num">07</span> Funções e tipagem</a>
+        <a href="#parte8" class="toc-item"><span class="toc-num">08</span> Projeto terminal</a>
+      </div>
+    </nav>
+
+    <!-- INTRO -->
+    <section id="intro" class="intro-section section-block">
+      <div class="part-header">
+        <div class="part-num">00</div>
+
+        <div class="part-meta">
+          <span class="part-tag">introdução</span>
+          <h2>Começando do absoluto zero</h2>
+          <p class="part-desc">
+            Instalar Python, entender terminal, pip, venv e escrever os primeiros programas.
+          </p>
+        </div>
+      </div>
+
+      <h3>Objetivo da trilha</h3>
+
+      <p>
+        Esta trilha ensina Python começando literalmente do começo:
+        instalar Python, abrir terminal, entender o que é pip,
+        criar ambientes virtuais e escrever os primeiros códigos.
+      </p>
+
+      <div class="callout tip">
+        <p class="callout-label">Filosofia</p>
+
+        <p>
+          Aprenda como desenvolvedor profissional desde o início.
+          Use tipagem, organização, nomes claros e entenda o motivo
+          dos comandos existirem.
+        </p>
+      </div>
+    </section>
+
+    <!-- PARTE 1 -->
+    <section id="parte1" class="section-block">
+      <div class="part-header">
+        <div class="part-num">01</div>
+
+        <div class="part-meta">
+          <span class="part-tag">instalação</span>
+          <h2>Instalando Python corretamente</h2>
+          <p class="part-desc">
+            Como instalar, validar e entender o ambiente.
+          </p>
+        </div>
+      </div>
+
+      <div class="exercise-card">
+        <div class="ex-header" onclick="toggle(this)">
+          <span class="ex-num">1.1</span>
+          <span class="ex-title">Verificando se Python está instalado</span>
+          <span class="ex-toggle">▾</span>
+        </div>
+
+        <div class="ex-body">
+          <h3>Windows</h3>
+
+          <div class="code-block">
+            <div class="code-label">Terminal</div>
+
+            <pre>python --version</pre>
+          </div>
+
+          <h3>Alternativa moderna</h3>
+
+          <div class="code-block">
+            <div class="code-label">Terminal</div>
+            <pre>py --version</pre>
+          </div>
+
+          <div class="callout info">
+            <p class="callout-label">Por que existe o comando py?</p>
+
+            <p>
+              O launcher <code>py</code> ajuda quando existem múltiplas
+              versões de Python instaladas no Windows.
+            </p>
+          </div>
+
+          <h3>Verificando pip</h3>
+
+          <div class="code-block">
+            <div class="code-label">Terminal</div>
+            <pre>python -m pip --version</pre>
+          </div>
+
+          <div class="analogy">
+            <p class="analogy-label">O que é pip?</p>
+
+            <p>
+              O pip é o gerenciador de pacotes do Python.
+              Ele instala bibliotecas criadas por outras pessoas.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PARTE 2 -->
+    <section id="parte2" class="section-block">
+      <div class="part-header">
+        <div class="part-num">02</div>
+
+        <div class="part-meta">
+          <span class="part-tag">terminal</span>
+          <h2>Entendendo comandos básicos</h2>
+          <p class="part-desc">
+            O que significa -m, help e como Python executa módulos.
+          </p>
+        </div>
+      </div>
+
+      <div class="exercise-card">
+        <div class="ex-header" onclick="toggle(this)">
+          <span class="ex-num">2.1</span>
+          <span class="ex-title">O que significa -m?</span>
+          <span class="ex-toggle">▾</span>
+        </div>
+
+        <div class="ex-body">
+          <p>
+            O parâmetro <code>-m</code> diz ao Python:
+            “execute um módulo Python”.
+          </p>
+
+          <div class="code-block">
+            <div class="code-label">Exemplo</div>
+
+            <pre>python -m pip install requests</pre>
+          </div>
+
+          <div class="callout good">
+            <p class="callout-label">Boa prática</p>
+
+            <p>
+              Prefira <code>python -m pip</code> em vez de apenas
+              <code>pip</code>. Isso evita problemas com múltiplas
+              instalações de Python.
+            </p>
+          </div>
+
+          <h3>Ajuda integrada</h3>
+
+          <div class="code-block">
+            <div class="code-label">Terminal</div>
+
+            <pre>python --help
+python -m pip --help</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PARTE 3 -->
+    <section id="parte3" class="section-block">
+      <div class="part-header">
+        <div class="part-num">03</div>
+
+        <div class="part-meta">
+          <span class="part-tag">pip</span>
+          <h2>Instalando bibliotecas</h2>
+          <p class="part-desc">
+            Instalar, atualizar e usar requirements.txt.
+          </p>
+        </div>
+      </div>
+
+      <div class="exercise-card">
+        <div class="ex-header" onclick="toggle(this)">
+          <span class="ex-num">3.1</span>
+          <span class="ex-title">Instalando pacotes</span>
+          <span class="ex-toggle">▾</span>
+        </div>
+
+        <div class="ex-body">
+          <div class="code-block">
+            <div class="code-label">Instalar requests</div>
+
+            <pre>python -m pip install requests</pre>
+          </div>
+
+          <div class="code-block">
+            <div class="code-label">Atualizar pip</div>
+
+            <pre>python -m pip install --upgrade pip</pre>
+          </div>
+
+          <div class="code-block">
+            <div class="code-label">Instalar requirements.txt</div>
+
+            <pre>python -m pip install -r requirements.txt</pre>
+          </div>
+
+          <div class="callout info">
+            <p class="callout-label">O que é requirements.txt?</p>
+
+            <p>
+              Um arquivo que lista dependências do projeto.
+              Outros desenvolvedores podem te enviar esse arquivo.
+              Você instala tudo de uma vez com <code>-r</code>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PARTE 4 -->
+    <section id="parte4" class="section-block">
+      <div class="part-header">
+        <div class="part-num">04</div>
+
+        <div class="part-meta">
+          <span class="part-tag">venv</span>
+          <h2>Ambientes virtuais</h2>
+          <p class="part-desc">
+            Isolando dependências corretamente.
+          </p>
+        </div>
+      </div>
+
+      <div class="exercise-card">
+        <div class="ex-header" onclick="toggle(this)">
+          <span class="ex-num">4.1</span>
+          <span class="ex-title">Criando um .venv</span>
+          <span class="ex-toggle">▾</span>
+        </div>
+
+        <div class="ex-body">
+          <div class="code-block">
+            <div class="code-label">Criar ambiente virtual</div>
+            <pre>python -m venv .venv</pre>
+          </div>
+
+          <div class="code-block">
+            <div class="code-label">Ativar no Windows</div>
+            <pre>.venv\Scripts\activate</pre>
+          </div>
+
+          <div class="code-block">
+            <div class="code-label">Desativar</div>
+            <pre>deactivate</pre>
+          </div>
+
+          <div class="analogy">
+            <p class="analogy-label">Pense assim</p>
+
+            <p>
+              Um ambiente virtual é como uma caixa isolada.
+              Cada projeto guarda suas próprias bibliotecas.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PARTE 5 -->
+    <section id="parte5" class="section-block">
+      <div class="part-header">
+        <div class="part-num">05</div>
+
+        <div class="part-meta">
+          <span class="part-tag">primeiro código</span>
+          <h2>Seu primeiro programa</h2>
+          <p class="part-desc">
+            Arquivos .py, print e execução.
+          </p>
+        </div>
+      </div>
+
+      <div class="exercise-card">
+        <div class="ex-header" onclick="toggle(this)">
+          <span class="ex-num">5.1</span>
+          <span class="ex-title">Criando hello.py</span>
+          <span class="ex-toggle">▾</span>
+        </div>
+
+        <div class="ex-body">
+          <div class="code-block">
+            <div class="code-label">hello.py</div>
+
+            <pre>mensagem: str = "Olá mundo"
+
+print(mensagem)</pre>
+          </div>
+
+          <div class="code-block">
+            <div class="code-label">Executar</div>
+
+            <pre>python hello.py</pre>
+          </div>
+
+          <div class="callout tip">
+            <p class="callout-label">Comece com tipagem</p>
+
+            <p>
+              Mesmo em exemplos simples, acostume-se a usar type hints.
+              Isso melhora autocomplete, manutenção e leitura.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PARTE 6 -->
+    <section id="parte6" class="section-block">
+      <div class="part-header">
+        <div class="part-num">06</div>
+
+        <div class="part-meta">
+          <span class="part-tag">fundamentos</span>
+          <h2>Variáveis e tipos</h2>
+          <p class="part-desc">
+            str, int, float, bool e listas.
+          </p>
+        </div>
+      </div>
+
+      <div class="exercise-card">
+        <div class="ex-header" onclick="toggle(this)">
+          <span class="ex-num">6.1</span>
+          <span class="ex-title">Tipos básicos</span>
+          <span class="ex-toggle">▾</span>
+        </div>
+
+        <div class="ex-body">
+          <div class="code-block">
+            <div class="code-label">Python</div>
+
+            <pre>nome: str = "Djalma"
+idade: int = 20
+altura: float = 1.80
+ativo: bool = True
+
+nomes: list[str] = ["Ana", "Bruno"]
+
+print(f"Nome: {nome}")</pre>
+          </div>
+
+          <div class="callout good">
+            <p class="callout-label">Use f-strings</p>
+
+            <p>
+              f-strings são mais modernas, legíveis e performáticas.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PARTE 7 -->
+    <section id="parte7" class="section-block">
+      <div class="part-header">
+        <div class="part-num">07</div>
+
+        <div class="part-meta">
+          <span class="part-tag">funções</span>
+          <h2>Funções com tipagem</h2>
+          <p class="part-desc">
+            def, parâmetros e retorno.
+          </p>
+        </div>
+      </div>
+
+      <div class="exercise-card">
+        <div class="ex-header" onclick="toggle(this)">
+          <span class="ex-num">7.1</span>
+          <span class="ex-title">Criando funções corretamente</span>
+          <span class="ex-toggle">▾</span>
+        </div>
+
+        <div class="ex-body">
+          <div class="code-block">
+            <div class="code-label">Python</div>
+
+            <pre>def somar(a: int, b: int) -> int:
+    return a + b
+
+
+resultado: int = somar(10, 20)
+
+print(resultado)</pre>
+          </div>
+
+          <div class="callout warn">
+            <p class="callout-label">Erro comum</p>
+
+            <p>
+              Não misture nomes confusos como x, y, z sem necessidade.
+              Prefira nomes claros.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PARTE 8 -->
+    <section id="parte8" class="section-block">
+      <div class="part-header">
+        <div class="part-num">08</div>
+
+        <div class="part-meta">
+          <span class="part-tag">mini projeto</span>
+          <h2>Projeto final</h2>
+          <p class="part-desc">
+            Criando um mini sistema de terminal.
+          </p>
+        </div>
+      </div>
+
+      <div class="project-final">
+        <div class="project-header">
+          <h2>Mini cadastro de tarefas</h2>
+        </div>
+
+        <div class="project-body">
+          <ul class="step-list">
+            <li><span class="step-num">01</span> Criar lista de tarefas</li>
+            <li><span class="step-num">02</span> Adicionar tarefas</li>
+            <li><span class="step-num">03</span> Listar tarefas</li>
+            <li><span class="step-num">04</span> Remover tarefas</li>
+            <li><span class="step-num">05</span> Usar funções tipadas</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      Beco dos Códigos — Trilha Python Básico
+    </footer>
+  </div>
+
+  <script type="module" src="../js/site-data.js"></script>
+  <script type="module" src="../js/components.js"></script>
+  <script type="module" src="../js/ui.js"></script>
+
+  <script>
+    function toggle(header) {
+      const body = header.nextElementSibling;
+      const icon = header.querySelector('.ex-toggle');
+
+      body.classList.toggle('open');
+      icon.classList.toggle('open');
+    }
+  </script>
+</body>
+</html>
+

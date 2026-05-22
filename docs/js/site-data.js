@@ -1,7 +1,8 @@
 export const siteNavLinks = [
   { text: 'Início', href: './index.html' },
   { text: 'Portfólio', href: './pages/portfolio.html' },
-  { text: 'Trilha OOP', href: './pages/trilha_oop_python.html' },
+  { text: 'Python OOP', href: './pages/trilha_oop_python.html' },
+  { text: 'Python Básico', href: './pages/trilha_python_basico.html' },
   { text: 'Projetos', href: './pages/projetos.html' },
   { text: 'Serviços', href: './pages/servicos.html' },
   { text: 'Contato', href: './pages/contato.html' }
